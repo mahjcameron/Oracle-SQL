@@ -1,0 +1,1477 @@
+------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+--www.techonthenet.com/oracle
+
+SELECT * FROM EMP;
+--SELECT <column>
+--FROM <table>
+SELECT DNAME, LOC from dept;
+SELECT distinct job from emp;
+------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+'WHERE CLAUSE'
+
+SELECT *
+FROM EMP
+WHERE job = 'MANAGER'
+
+SELECT *
+FROM EMP
+WHERE JOB = 'SALESMAN'
+AND SAL = 1600
+AND COMM = 300
+AND DEPTNO = 30
+
+#'Using Operators in the WHERE CLAUSE'
+
+SELECT * FROM EMP
+WHERE JOB != 'SALESMAN'
+
+SELECT * FROM EMP
+WHERE JOB = 'SALESMAN'
+AND SAL = 1500
+
+SELECT * FROM EMP
+WHERE JOB != 'SALESMAN'
+AND SAL < 2500
+
+SELECT * FROM EMP
+WHERE JOB != 'SALESMAN'
+AND SAL < 3000
+
+SELECT * FROM EMP
+WHERE JOB != 'SALESMAN'
+AND SAL <= 3000
+
+SELECT * FROM EMP
+WHERE JOB != 'SALESMAN'
+AND SAL > 3000
+
+-- Write a query that returns those employees who have a commission greater than their salary 
+SELECT * FROM EMP
+WHERE COMM > SAL
+
+-- Get all employees that are not managers and have a salary greater than 2500 and also work in department no# 20 
+SELECT * FROM EMP
+WHERE JOB != 'MANAGER'
+AND SAL > 2500
+AND DEPTNO = 20
+
+--USING WHERE with AND/OR
+SELECT * FROM EMP
+WHERE JOB = 'CLERK'
+OR JOB = 'SALESMAN'
+
+-- Get the names of those employees that are not managers nor salesmen and have a salary greater than or equal to 2000 
+SELECT ENAME FROM EMP
+WHERE JOB != 'MANAGER'
+AND JOB != 'SALESMAN'
+AND SAL >= 2000
+
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+#'USING IN, BETWEEN, NULL'
+
+SELECT ename, hiredate FROM EMP
+WHERE DEPTNO  = 20 
+OR DEPTNO = 30
+
+SELECT ename, hiredate FROM EMP
+WHERE DEPTNO IN (20,30)
+
+SELECT ename, hiredate FROM EMP
+WHERE ENAME IN ('FORD', 'SMITH', 'ALLEN', 'WARD', 'MARTIN')
+
+SELECT ename, hiredate FROM EMP
+WHERE ENAME NOT IN ('FORD', 'SMITH', 'ALLEN', 'WARD', 'MARTIN')
+
+SELECT * from emp
+where hiredate between '05/01/1981' and '12/09/1982'
+
+SELECT * from emp
+where SAL between 1000 AND 2000
+
+SELECT * from emp
+where SAL NOT BETWEEN 950 AND 1600
+
+SELECT * FROM EMP
+WHERE COMM IS NOT NULL;
+
+SELECT * FROM EMP WHERE MGR IS NULL
+
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+#'USING LIKE'
+
+SELECT * FROM EMP
+WHERE JOB = 'SALESMAN'
+AND (COMM = 300 OR COMM > 1100)
+
+SELECT * FROM EMP 
+WHERE JOB LIKE 'S%'
+
+SELECT * FROM EMP 
+WHERE JOB LIKE '%GER'
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+#'Concatenating and Order BY'
+
+SELECT ENAME "EMPLOYEE NAME", SAL SALARY, COMM COMMISSION
+FROM EMP;
+
+SELECT 'hello my name is ' || ename as "concatenated value"
+FROM EMP
+WHERE job = 'MANAGER'
+
+-- Create Query that looks like:
+-- King makes $5000 per month 
+-- Blake makes $2850 per month 
+-- Clark makes $2450 per month 
+SELECT ename || ' makes $' || sal || ' per month' as "employee income"
+FROM EMP
+
+-- ORDER BY 
+SELECT *
+FROM emp
+ORDER BY ENAME
+
+SELECT *
+FROM emp
+ORDER BY SAL
+
+-- ORDER BY descending order
+SELECT *
+FROM emp
+ORDER BY SAL DESC
+
+-- ORDER BY ascending order
+SELECT *
+FROM emp
+ORDER BY SAL ASC
+
+SELECT DEPTNO, SAL, ENAME
+FROM EMP
+ORDER BY DEPTNO, SAL
+
+SELECT *
+FROM EMP
+ORDER BY DEPTNO, SAL
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+#'Single Row Functions'
+SELECT 'my name is ' || ename
+FROM EMP
+
+SELECT concat('my name is ', ename)
+FROM EMP
+
+SELECT upper('hello')
+from emp
+
+SELECT 'hello'
+from emp
+where deptno = 20
+
+select upper('hello')
+from DUAL
+
+select lower('hello')
+from DUAL 
+
+SELECT 'pizza' as FOOD, 'fanta' as drink, concat('hello', ' John') from dual
+
+SELECT 'pizza' as FOOD, 'fanta' as drink, concat('hello', ' John') as "This is a func" from dual
+
+SELECT concat(lower(ename), ' is the name') from emp
+
+SELECT concat(lower(ename), upper(' is the name')) from emp
+where deptno = 20
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+#'Character Editing Clauses (Lower, Upper, LPAD, RPAD, SUBSTR, LENGTH, RTRIM, LTRIM'
+SELECT lower(ename) from emp;
+
+SELECT *
+FROM emp
+WHERE JOB = lower('MANAGER')
+
+SELECT *
+FROM emp
+WHERE JOB = upper('MANAGER')
+
+SELECT *
+FROM emp
+WHERE JOB = upper('manager')
+
+SELECT initcap('hello my name is Imtiaz') as sentence
+from dual
+
+SELECT length('hello my name is Imtiaz') as length
+from dual
+
+SELECT length(ename) as length
+from emp
+
+SELECT ename, length(ename) as length
+from emp
+
+SELECT ename, length(ename) as length
+from emp
+where length(ename) = 6
+
+select substr('hello', 2, 2)
+from dual
+
+select 'hello', substr('hello', 2, 2)
+from dual
+
+select 'hello', substr('hello', 2)
+from dual
+
+select 'Hello my name is', substr('Hello my name is', 10)
+from dual
+
+select 'Hello my name is', substr('Hello my name is', 10, 5)
+from dual
+
+select 'Hello my name is', length(substr('Hello my name is', 10, 5))
+from dual
+
+select LPAD('hello', 10, '&')
+from dual
+
+select LPAD('hello', 100, '&')
+from dual
+
+select RPAD('hello', 100, '&')
+from dual
+
+select LTRIM('hello', 'h')
+from dual
+
+select RTRIM('hhhhhellohhhhh', 'h')
+from dual
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+#'Date/INTEGER Editing Clauses ROUND, TRUNC, sysdate, systimestamp, add_months, months_between'
+-- round 
+
+SELECT round(107.088, 2) from dual
+
+SELECT round(107.088, 3) from dual
+
+SELECT round(107.0887, 3) from dual
+
+SELECT round(107.9) from dual
+
+-- trunc 
+
+SELECT trunc(107.938439849) from dual
+
+SELECT trunc(107.938439849, 3) from dual
+
+SELECT trunc(107.938439849, 5) from dual
+
+-- sysdate 
+
+SELECT sysdate from dual
+
+-- systimestamp 
+
+SELECT systimestamp from dual
+
+-- add_months 
+
+SELECT add_months('11/17/2012', 3)
+from dual
+
+SELECT add_months('11/17/2012', -3)
+from dual
+
+SELECT add_months(sysdate, -3)
+from dual
+
+SELECT add_months(sysdate, +100)
+from dual
+
+-- months_between 
+
+SELECT months_between('12/15/2012', '12/4/2013')
+from dual
+
+SELECT months_between('12/4/2013', '12/15/2012')
+from dual
+
+SELECT months_between('12/4/2013', '12/4/2012')
+from dual
+
+SELECT trunc(systimestamp) from dual
+
+SELECT trunc(systimestamp, 'YEAR') from dual
+
+SELECT trunc(systimestamp, 'MONTH') from dual
+
+SELECT hiredate, trunc(hiredate, 'MONTH') from emp
+
+SELECT ename, hiredate, trunc(hiredate, 'MONTH') from emp
+
+SELECT ename, hiredate, trunc(hiredate, 'MONTH')
+from emp
+where trunc(hiredate, 'YEAR') = '01/01/1982'
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+#'SRF Conversion (to_char, to_date)'
+SELECT to_char(sysdate, 'mm-dd-yyyy') from dual
+
+SELECT to_char(sysdate, 'mm/dd/yyyy') from dual
+
+SELECT to_char(sysdate, 'dd-mm-yyyy') from dual
+
+SELECT to_char(sysdate, 'ddth "of" month, yyyy') from dual
+
+-- Solution to assignment at 10:52 
+
+SELECT ename, sal, to_char(sal, '$99,999.99') salaries from emp
+
+-- to_date function 
+
+SELECT to_date('2012-08-27', 'yyyy-mm-dd'))
+from dual
+
+SELECT add_months(to_date('2012-08-27', 'yyyy-mm-dd'), 2)
+from dual
+
+SELECT to_date('3 of June, 2012', 'dd "of" Month, YYYY')
+from dual
+
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+#'NULL and NULL IF (USING NVL to convert into string)'
+select ename, job, sal, comm
+from emp
+where empno in (7839, 7698, 7566, 7654)
+
+select ename, job, sal, NVL(comm, 0)
+from emp
+where empno in (7839, 7698, 7566, 7654)
+
+select ename, job, sal, NVL(to_char(comm), 'No Data Found')
+from emp
+where empno in (7839, 7698, 7566, 7654)
+
+select ename, length(ename) from emp
+
+select ename, length(ename), NULLIF(length(ename), 5) from emp
+
+select ename, length(ename), nvl(NULLIF(length(ename), 5), 'length is 5') from emp /* Gives "invalid number" error */
+
+select ename, length(ename), nvl(NULLIF(to_char(length(ename)), to_char(5)), 'length is 5') from emp 
+
+select ename, length(ename), nvl(NULLIF(to_char(length(ename)), to_char(5)), 'length is 5') as result, sal from emp 
+where sal > 2000
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+#'Grouping / Aggregating Functions (MAX, MIN, COUNT, AVG, SUM)'
+select max(sal) from emp
+
+select max(sal) as max_sal from emp
+
+select min(sal) as min_sal from emp
+
+select sum(sal) as sum_sal from emp
+
+SELECT * from emp
+where lower(job) like '%manager%'
+
+SELECT max(sal) from emp
+where lower(job) like '%manager%'
+
+SELECT max(sal) from emp
+where job = 'MANAGER'
+
+SELECT avg(sal) as avg_sal from emp
+
+SELECT count(ename) as count from emp
+
+SELECT count(sal) as count from emp
+
+SELECT count(*) as count from emp
+
+SELECT count(comm) as count from emp
+
+SELECT sum(sal) / count(*) as computed_avg, avg(sal) as native_avg from emp
+
+SELECT sum(sal) + avg(sal) as computed from emp 
+
+SELECT sum(sal) as sum, avg(sal) as avg, max(sal) as max, min(sal) as min, count(*)
+from emp
+
+SELECT avg(sal)
+from emp
+where job = 'SALESMAN'
+
+SELECT avg(sal)
+from emp
+where job = 'CLERK'
+
+SELECT avg(sal)
+from emp
+where job = 'MANAGER'
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+#'Group By and Having Clause'
+SELECT avg(sal), job
+from emp
+GROUP BY job
+
+SELECT job
+from emp
+GROUP BY job
+
+SELECT count(*), job
+from emp
+GROUP BY job
+
+SELECT min(sal), job
+from emp
+GROUP BY job
+
+SELECT distict job from emp
+
+SELECT count(*), job
+from emp
+GROUP BY job
+HAVING count(*) = 2
+
+SELECT job
+from emp
+GROUP BY job
+HAVING count(*) = 2
+#'Syntax Ordering'
+--1) SELECT job
+--2) FROM emp
+--3) WHERE
+--4) GROUP BY JOB
+--5) HAVING count(*) = 2
+--6) ORDER BY
+
+SELECT deptno
+from emp
+GROUP BY deptno
+HAVING count(*) > 3
+
+SELECT deptno, count(*)
+from emp
+GROUP BY deptno
+
+SELECT deptno, count(*)
+from emp
+GROUP BY deptno
+HAVING count(*) > 3
+
+SELECT * from emp
+
+Select job, count(*)
+from emp
+group by job
+
+Select job, count(*)
+from emp
+group by job, deptno
+
+SELECT job, deptno
+from emp
+
+SELECT job, deptno
+from emp
+group by job, deptno
+
+SELECT job, deptno, count(*)
+from emp
+group by job, deptno
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+#'SELECT within SELECT (Subqueries, Nested Queries)'
+SELECT * from dept
+
+SELECT * from dept
+where deptno = 30
+
+SELECT * from dept
+where deptno = ( select deptno from dept where deptno = 30)
+
+SELECT * from dept
+where deptno < ( select deptno from dept where deptno = 30)
+
+SELECT * from dept
+where deptno < ( select deptno from dept where deptno = 30)
+and dname = 'ACCOUNTING'
+
+SELECT * from dept
+where deptno < 30
+and dname = 'ACCOUNTING'
+
+SELECT * from ( select * from dept)
+
+SELECT * from ( select * from emp)
+
+SELECT * from emp where deptno = (select deptno from dept where loc = 'CHICAGO')
+
+SELECT * from emp where deptno in (select deptno from dept where deptno in (10,20))
+
+SELECT * from emp where deptno in (select deptno, loc, dname from dept where deptno in (10,20)) --too many values
+
+SELECT job, ename, (select job from emp)
+from emp  -- single-row subquery returns more than one row
+
+SELECT job, ename, (select job from emp where ename = 'KING')
+from emp 
+
+SELECT job, ename, (select 'Hello' from emp)
+from emp -- single-row subquery returns more than one row
+
+SELECT job, ename, (select * from dual)
+from emp
+
+SELECT job, ename, (select 'Hello there' from dual)
+from emp
+
+SELECT job, ename, (select 'Hello there' from dual)
+from emp
+where job = (select job from emp where job = 'PRESIDENT')
+
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+#'Joins'
+SELECT * from emp
+where deptno = (select deptno from dept where loc = 'CHICAGO')
+
+SELECT * from emp
+
+SELECT * from dept
+
+SELECT *
+from emp, dept
+WHERE emp.deptno = dept.deptno
+
+SELECT *
+from emp, dept
+WHERE emp.deptno = dept.deptno
+and LOC = 'DALLAS'
+
+SELECT ename, job, sal
+from emp, dept
+WHERE emp.deptno = dept.deptno
+and dept.loc = 'DALLAS'
+
+SELECT emp.ename, emp.job, emp.sal
+from emp, dept
+WHERE deptno = deptno
+and dept.loc = 'DALLAS' -- column ambiguously defined
+
+SELECT ename as first_name, job, sal
+from emp, dept
+WHERE emp.deptno = dept.deptno
+and dept.loc = 'DALLAS'
+
+SELECT e.ename as first_name, job, sal
+from emp e, dept d
+WHERE e.deptno = d.deptno
+and loc = 'DALLAS'
+
+SELECT e.ename as first_name, job, sal, e.deptno
+from emp e, dept d
+WHERE e.deptno = d.deptno
+and loc = 'DALLAS'
+
+SELECT e.ename as first_name, job, sal, e.deptno
+from (select * from emp where job in ('MANAGER', 'CLERK')) e, (SELECT * from dept) d
+WHERE e.deptno = d.deptno
+and loc = 'DALLAS'
+
+SELECT e.ename as first_name, job, sal, e.deptno
+from (select * from emp where job in ('MANAGER', 'CLERK')) e, (SELECT * from dept where loc = 'DALLAS') d
+WHERE e.deptno = d.deptno
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+#'Different Types of Joins (Inner, Right, Left, Outer)'
+SELECT *
+from emp, dept
+WHERE emp.deptno = dept.deptno
+
+SELECT *
+from emp INNER JOIN dept
+ON emp.deptno = dept.deptno
+
+SELECT *
+from emp RIGHT JOIN dept
+ON emp.deptno = dept.deptno
+
+SELECT *
+from emp LEFT JOIN dept
+ON emp.deptno = dept.deptno
+
+SELECT *
+from dept LEFT JOIN emp
+ON emp.deptno = dept.deptno
+
+SELECT *
+from dept RIGHT JOIN emp
+ON emp.deptno = dept.deptno
+
+SELECT *
+from emp RIGHT OUTER JOIN dept
+ON emp.deptno = dept.deptno
+
+SELECT *
+from emp LEFT OUTER JOIN dept
+ON emp.deptno = dept.deptno
+
+SELECT *
+from emp, dept
+WHERE emp.deptno(+) = dept.deptno --RIGHT OUTER JOIN
+
+SELECT *
+from emp, dept
+WHERE emp.deptno = dept.deptno(+) --LEFT OUTER JOIN
+
+SELECT *
+from emp FULL OUTER JOIN dept
+ON emp.deptno = dept.deptno
+
+SELECT *
+from (select * from emp) emp FULL OUTER JOIN dept
+ON emp.deptno = dept.deptno
+
+SELECT *
+from (select * from emp) e FULL OUTER JOIN dept
+ON e.deptno = dept.deptno
+
+SELECT *
+from (select * from emp) e FULL OUTER JOIN (select * from dept) d
+ON e.deptno = d.deptno
+
+SELECT *
+from (select * from emp) e, (select * from dept) d
+WHERE e.deptno = d.deptno
+
+SELECT *
+from (select * from emp where job = 'SALESMAN') e FULL OUTER JOIN (select * from dept) d
+ON e.deptno = d.deptno
+
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+#'Exists Function'
+SELECT empno, ename, job, mgr, hiredate, sal, comm, e.deptno as deptno, d.deptno as deptno, dname, loc
+from (select * from dept) d LEFT OUTER JOIN (select * from emp where job = 'SALESMAN') e
+ON e.deptno = d.deptno
+
+SELECT e.*, d.*
+from (select * from dept) d LEFT OUTER JOIN (select * from emp where job = 'SALESMAN') e
+ON e.deptno = d.deptno -- Further Simplified Version
+
+SELECT * 
+from emp
+WHERE EXISTS (select 'random' from dual)
+
+SELECT * 
+from emp
+WHERE NOT EXISTS (select 'random' from dual)
+
+SELECT * 
+from emp
+WHERE EXISTS (select null from dual)
+
+SELECT * 
+from emp
+WHERE NOT EXISTS (select * from emp where job = 'PROGRAMMER')
+
+SELECT d.*
+FROM dept d
+WHERE EXISTS (SELECT * FROM emp WHERE d.deptno = emp.deptno)
+
+SELECT d.*
+FROM dept d
+WHERE NOT EXISTS (SELECT * FROM emp WHERE d.deptno = emp.deptno)
+AND LOC = 'CHICAGO' -- no data found
+
+SELECT d.*
+FROM dept d
+WHERE NOT EXISTS (SELECT * FROM emp WHERE d.deptno = emp.deptno)
+AND LOC = 'BOSTON' -- no data found
+
+SELECT d.*
+FROM dept d
+WHERE NOT EXISTS (SELECT * FROM emp WHERE d.deptno = emp.deptno)
+OR LOC = 'CHICAGO'
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+#'Other Types of Join (Self, Cross, Using, Equijoin)'
+
+#'Self Join'
+SELECT e.ename AS employee_name, m.ename AS manager_name
+FROM emp e 
+LEFT JOIN emp m ON e.mgr = m.empno
+ORDER BY m.ename DESC
+
+#'Cross Join -- Combines all tables so if T1 has 4 rows and T2 has 14 rows there will be 14 rows for each of T1 rows so 56 rows (to see all records)'
+SELECT * FROM emp CROSS JOIN dept
+
+#'Using Clause -- Specify column with EXACT same name/characters with the USING clause but can use LEFT,RIGHT,OUTER or by using two different col' --USING (col1, col2)
+
+SELECT ename, mgr, loc FROM emp JOIN dept USING(deptno)
+
+#'Natural Join -- if a specific column is specified that shares the EXACT same name/characters the joining table it will LEFT join on those two (equivalent to ON t1.col = t2.col)'
+SELECT ename, mgr, loc
+FROM emp NATURAL JOIN dept
+
+#'Equijoin -- equivalent to inner join but older jargan (Nonequijoin -- another way to join based on the BETWEEN clause)'
+CREATE TABLE job_grade
+    (Grade_level varchar(2) not null,
+    lowest_sal number not null,
+    highest_sal number not null);
+
+
+INSERT ALL
+    INTO job_grade
+    VALUES ('A', 0, 1000)
+    INTO job_grade
+    VALUES ('B', 1001, 2000)
+    INTO job_grade
+    VALUES ('C', 2001, 3000)
+    INTO job_grade
+    VALUES ('D', 3001, 4000)
+    INTO job_grade
+    VALUES ('E', 4001, 5000)
+SELECT * FROM DUAL;
+
+
+--Nonequijoin
+SELECT e.ename, e.sal, j.grade_level
+FROM emp e JOIN job_grade j
+ON e.sal BETWEEN j.lowest_sal AND j.highest_sal;
+
+SELECT ename, job,
+(CASE job
+    WHEN 'PRESIDENT' THEN 'Big Shot'
+    WHEN 'MANAGER' THEN 'Decides the pay'
+    WHEN 'ANALYST' THEN 'Good with numbers'
+    WHEN 'CLERK' THEN 'hard working'
+    ELSE 'No Comment'
+    END) AS "Comment"
+FROM emp;
+
+SELECT ename, sal,
+(CASE 
+    WHEN sal > 3000 THEN 'Big Shot'
+    ELSE 'Earn More Money'
+    END) AS "Salary"
+FROM emp;
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+#'Analytic Function OVER and PARTITION with OVER BY -- creating a window to group over'
+
+SELECT * FROM emp
+
+--show an Single return function of total employees with the emp table
+SELECT e.*, (SELECT COUNT(*) FROM emp) total_employees FROM emp e
+
+--show an single return function of total sal by job title
+SELECT ename, sal, job, (SELECT SUM(sal) FROM emp
+WHERE job = e.job) total_sal FROM emp e
+
+#'same thing using Over and Partition by -- which essentially groups over the column (partition by (col you want to be grouped on))'
+SELECT ename, sal, job, SUM(sal) OVER(PARTITION BY job) Total_Sal_by_Job FROM emp
+
+SELECT ename, sal, job, loc, SUM(sal) OVER(PARTITION BY job) Total_Sal_by_Job,
+SUM(sal) OVER(PARTITION BY loc) total_sal_by_loc,
+MAX(sal) OVER(PARTITION BY job) Highest_Salary_by_job,
+MAX(sal) OVER(PARTITION BY loc) Highest_Salary_by_loc
+FROM emp e NATURAL JOIN dept d 
+ORDER BY loc, job
+
+#'Running Total using Over and Order By -- summing the sal together in order of the column your order by OVER(ORDER BY col)'
+SELECT empno, sal, SUM(sal) OVER (ORDER BY empno) Contiously_Summing_Sal FROM emp e
+
+--The ORDER BY col means that it includes all the rows with a value less that or equal to that of the current row so it requires unique identifier to get the running total
+SELECT empno, sal, SUM(sal) OVER (ORDER BY empno) Contiously_Summing_Sal 
+FROM emp e
+ORDER BY empno
+
+SELECT empno, sal, SUM(sal) OVER (ORDER BY empno range between unbounded preceding 
+      and current row) Continously_Summing_sal
+FROM emp e
+ORDER BY empno
+
+--example if you use not unique identifier and it becomes a sum (look at the sal $1250 it does not add it remains the same)
+SELECT empno, sal, SUM(sal) OVER (ORDER BY sal) Contiously_Summing_Sal 
+FROM emp e
+ORDER BY sal
+
+--fix to this using ROWS BETWEEN......
+SELECT empno, sal, SUM(sal) OVER (ORDER BY sal rows between unbounded preceding and current row) Contiously_Summing_Sal 
+FROM emp e
+ORDER BY sal
+
+--Using a sliding row so a specific number of rows instead of unbounded
+SELECT empno, sal, SUM(sal) OVER (ORDER BY sal rows between 1 preceding and current row) Contiously_Summing_Sal 
+FROM emp e
+ORDER BY sal
+
+#'Can use to count rows'
+SELECT empno, sal, COUNT(*) OVER (ORDER BY empno) Running_Total_row FROM emp e
+
+#'Using both Partition by and Order by'
+SELECT empno, sal, job, SUM(sal) OVER (PARTITION BY job ORDER BY empno) Running_Total_Sal_by_job FROM emp e
+ORDER BY job, empno
+
+#'Filtering with OVER -- over(partition) gets computed after the WHERE clause so requires it to be in a Subquery to get computed first'
+SELECT * FROM 
+(SELECT e.*, COUNT(*) OVER(PARTITION BY job) job_count
+FROM emp e
+)
+WHERE job_count > 2
+
+#'Row_number, Rank, Dense_rank function'
+--Row_number incremental value for each row
+--Rank assigns a rank number but if the same then assigns the same rank (so in a race if 2nd place is tied between two people then the rank would be 1-first place, 2-second place, 2-second place, 4-third place so skipping 3)
+--Dense_rank assigns a rank number but no gaps between ranks (so if there is no 1st place and 2 second place then the rank would be 1-second place, 1-second place, 2-third place not skipping over ranks)
+
+SELECT empno, sal, job,
+ROW_NUMBER() OVER(ORDER BY sal) rn,
+RANK() OVER(ORDER BY sal) rk,
+DENSE_RANK() OVER(ORDER BY sal) dr
+FROM emp
+
+#'Lead and Lag Function'
+--Question who was the employee hired before/after Martin
+SELECT e.*,
+LAG(empno) OVER(ORDER BY empno) Previous_employee,
+LEAD(empno) OVER(ORDER BY empno) Next_employee
+FROM emp e
+
+#'First and Last Value'
+--Question Find the first employee salary and last employee salary
+select e.*,
+first_value ( sal ) over (order by empno) first_sal_by_empno,
+last_value ( sal ) over (order by empno range between current row and unbounded following) last_sal_by_id
+from   emp e;
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+#'Assigntment Application of Window Function and Self Join'
+--Working with Price, Quantity, Sales
+--Table Sales (columns: order_id, product_id, Customer_id, order_date, Quantity, Price)
+
+-- #1  SQL self join to retrieve the order details along with customer information 
+SELECT s.*, c.customer_name, c.email FROM sales s
+JOIN customers c ON s.customer_id = c.customer_id
+
+-- #2 Calculation of total sales amount for each order
+SELECT o.order_id, price*quantity AS total_amount FROM sales
+
+-- #3 Window function to calculate the average order amount for each customer 
+SELECT order_id, customer_id, quantity*price AS total_amount, 
+AVG(total_amount) OVER(PARTITION BY customer_id) AS avg_order_amount
+FROM sales
+
+-- #4 Query to find the top 5 customers with the highest average order amount
+SELECT customer_id, price*quantity AS total_amount 
+AVG(total_amount) OVER(PARTITION BY customer_id) AS avg_order_amount
+FROM sales
+GROUP BY customer_id
+ORDER BY avg_order_amount DESC LIMIT 5
+
+-- #5 Calculation of cumulative sum of total sales amount for each order
+SELECT quantity*price AS total_sales, 
+SUM(total_sales) OVER(ORDER BY order_date, order_id) AS cumulative_sales
+FROM sales
+
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+'# Creating Tables and Database Design'
+-- column name_data type_constraint
+CREATE TABLE stores(
+    store_id INT NOT NULL,
+    city VARCHAR(50)
+);
+
+INSERT INTO stores(store_id, city)
+VALUES(1, 'San Francisco')
+
+INSERT INTO stores(store_id, city)
+VALUES(2, 'New York City')
+
+INSERT INTO stores(store_id, city)
+VALUES(3, 'Chicago')
+
+#'Insert Multiple Rows at a time - Only do it once if you have no primary key'
+INSERT ALL 
+    INTO stores(store_id, city) VALUES(4, 'Philadelphia')
+    INTO stores(store_id, city) VALUES(5, 'Boston')
+    INTO stores(store_id, city) VALUES(6, 'Seattle')
+SELECT * FROM dual;
+
+#'Creating a table with Primary Key Constraint'
+-- NUMBER Syntax (total number in row, number of decimal points)
+-- CONSTRAINT constraint name
+    --Constraint Query
+--NUMBER allows for decimals where INT only allows whole Negative/Positive Numbers
+
+CREATE TABLE products(
+    product_id NUMBER NOT NULL,
+    name VARCHAR(50),
+    product_cost NUMBER(5,2), -- NUMBER Syntax (total number in row, number of decimal points)
+    product_retail NUMBER(5,2),
+    product_type VARCHAR(10),
+    store_id NUMBER NOT NULL,
+    CONSTRAINT product_pk -- CONSTRAINT constraint name 
+        PRIMARY KEY (product_id)  
+);
+
+INSERT ALL 
+    INTO products(product_id, name, product_cost, product_retail, product_type, store_id) 
+        VALUES(1001, 'Colgate Toothpaste', 2.25, 5.47, 'hygiene', 2)
+    INTO products(product_id, name, product_cost, product_retail, product_type, store_id) 
+        VALUES(1002, 'Colgate Toothpaste', 2.25, 5.47, 'hygiene', 2)
+    INTO products(product_id, name, product_cost, product_retail, product_type, store_id) 
+        VALUES(1003, 'Listerine Mouthwash', 1.75, 4.81, 'hygiene', 3)
+SELECT * FROM DUAL
+
+
+INSERT ALL
+    INTO products (product_id, name, product_cost, product_retail, product_type, store_id )
+        VALUES (1004, 'T-Shirt', 1.75, 7.77, 'Clothing', 2)
+    INTO products (product_id, name, product_cost, product_retail, product_type, store_id )
+        VALUES (1005, 'T-Shirt', 1.65, 7.85, 'Clothing', 2)
+    INTO products (product_id, name, product_cost, product_retail, product_type, store_id )
+        VALUES (1006, 'T-Shirt', 1.73, 7.80, 'Clothing', 3)
+    INTO products (product_id, name, product_cost, product_retail, product_type, store_id )
+        VALUES (1007, 'Shorts', 0.73, 5.60, 'Clothing', 3)
+    INTO products (product_id, name, product_cost, product_retail, product_type, store_id )
+        VALUES (1008, 'Dress Shoes', 17.85, 87.67, 'Clothing', 2)
+    INTO products (product_id, name, product_cost, product_retail, product_type, store_id )
+        VALUES (1009, 'Garden Chair', 12.01, 27.87, 'Home & Gar', 2)
+    INTO products (product_id, name, product_cost, product_retail, product_type, store_id )
+        VALUES (1010, 'Grass Fertilizer', 3.20, 8.70, 'Home & Gar', 2)
+SELECT * FROM DUAL;
+
+#'INSERT ALL Multi-table and Conditional Inserts'
+
+DESCRIBE emp -- get description of any table
+
+CREATE table dest_tbl_1
+(
+    id number,
+    name varchar2(50),
+    date_of date
+)
+
+CREATE table dest_tbl_2
+(
+    id number,
+    name varchar2(50),
+    date_of date
+)
+
+CREATE table dest_tbl_3
+(
+    id number,
+    name varchar2(50),
+    date_of date
+)
+
+INSERT ALL
+    INTO dest_tbl_1 (id, name, date_of) values (EMPNO, ENAME, HIREDATE)
+    INTO dest_tbl_2 (id, name, date_of) values (EMPNO, ENAME, HIREDATE)
+    INTO dest_tbl_3 (id, name, date_of) values (EMPNO, ENAME, HIREDATE)
+SELECT empno, ename, hiredate
+FROM emp
+
+SELECT * FROM dest_tbl_1
+
+INSERT ALL
+WHEN sal <= 1500 THEN
+    INTO dest_tbl_1 (id, name, date_of) values (EMPNO, ENAME, HIREDATE)
+WHEN sal BETWEEN 1501 AND 2500 THEN 
+    INTO dest_tbl_2 (id, name, date_of) values (EMPNO, ENAME, HIREDATE)
+WHEN sal  > 2500 THEN -- Can also use Else but no necessary
+    INTO dest_tbl_3 (id, name, date_of) values (EMPNO, ENAME, HIREDATE)
+SELECT empno, ename, hiredate, sal --For WHEN clause it requires you to SELECT the condition inside the SELECT CAUSE so sal is needed in the SELECT CLAUSE
+FROM emp
+
+SELECT * FROM dest_tbl_1
+
+SELECT * FROM dest_tbl_2
+
+SELECT * FROM dest_tbl_3
+
+#'Using Alter to modify the table structure'
+
+SELECT * FROM products
+
+--if you are inserting into all row you don't need to identify the row
+INSERT INTO products VALUES(1011, '', 4.00, 8.00, 'Clothing', 3)
+
+ALTER TABLE products
+--VARCHAR2 (same as varchar but VARCHAR2 is industry standard)
+MODIFY name VARCHAR2(50) NOT NULL;
+
+DELETE FROM products WHERE product_id = 1011
+
+ALTER TABLE products
+MODIFY(
+    product_cost NUMBER(5,2) NOT NULL,
+    product_retail NUMBER(5,2) NOT NULL
+);
+
+#'Renaming Columns'
+ALTER TABLE products
+    RENAME COLUMN name TO product_name
+
+#'Creating Tables with existing data and using the UPDATE CLAUSE'
+
+CREATE TABLE employees AS
+SELECT empno, ename, job, hiredate, sal, comm FROM emp
+
+SELECT * FROm employees
+
+ALTER TABLE employees
+    ADD store_id NUMBER NOT NULL; -- you can't add column as there is no data 
+
+ALTER TABLE employees
+    ADD store_id NUMBER
+
+#'UPDATE -- instead of inserting it will update records'
+
+UPDATE employees
+SET store_id = 3
+WHERE ename IN('KING', 'BLAKE', 'CLARK')
+
+#'Updating multiple rows at the same time using CASE'
+UPDATE employees
+SET store_id = 
+    CASE 
+        WHEN job = 'SALESMAN' THEN 2
+        WHEN job IN ('CLERK', 'ANALYST') THEN 4
+        WHEN ename = 'JONES' THEN 1
+    END;
+
+SELECT * FROM employees
+
+ALTER TABLE employees
+    MODIFY store_id NUMBER NOT NULL;
+    
+----------------------------------------------------------------------------------------------------
+#'Merge Statement (allow you to put two tables together to fill in blank rows)'
+
+CREATE TABLE existing_customers (
+  customer_id NUMBER(5),
+  first_name VARCHAR2(100),
+  last_name VARCHAR2(100),
+  address_state VARCHAR2(10),
+  email_address VARCHAR2(350),
+  CONSTRAINT old_pk_cust PRIMARY KEY (customer_id)
+);
+
+BEGIN
+	INSERT INTO existing_customers (customer_id, first_name, last_name, address_state, email_address)
+	VALUES (1, 'Teresa', 'Hudson', 'NY', 'thudson@abc.com');
+	INSERT INTO existing_customers (customer_id, first_name, last_name, address_state, email_address) 
+	VALUES (2, 'Fred', 'Montgomery', 'CA', 'fmont@gmail.com');
+	INSERT INTO existing_customers (customer_id, first_name, last_name, address_state, email_address) 
+	VALUES (3, 'Lois', 'Lawson', 'OR', 'lois_law@outlook.com');
+	INSERT INTO existing_customers (customer_id, first_name, last_name, address_state, email_address) 
+	VALUES (4, 'Alice', 'Perry', 'SC', 'aliceperry');
+	INSERT INTO existing_customers (customer_id, first_name, last_name, address_state, email_address) 
+	VALUES (5, 'Ralph', 'Montgomery', 'TX', 'ralph_mont25@gmail.com');
+	INSERT INTO existing_customers (customer_id, first_name, last_name, address_state, email_address) 
+	VALUES (6, 'Dorothy', 'Armstrong', 'OR', 'abc123@abc.com');
+	INSERT INTO existing_customers (customer_id, first_name, last_name, address_state, email_address) 
+	VALUES (7, 'Fred', 'Wallace', 'NY', 'wallacef@testwebsite.co.uk');
+	INSERT INTO existing_customers (customer_id, first_name, last_name, address_state, email_address) 
+	VALUES (8, 'Joseph', 'Bell', 'FL', 'jbell@comm.edu');
+	INSERT INTO existing_customers (customer_id, first_name, last_name, address_state, email_address) 
+	VALUES (9, 'Lois', 'Martinez', 'CALIF', 'loismar@awe.com');
+	INSERT INTO existing_customers (customer_id, first_name, last_name, address_state, email_address) 
+	VALUES (10, 'Robert', 'Rice', 'IN', 'robrice123');
+END;
+
+CREATE TABLE  new_customers(
+  customer_id NUMBER(5),
+  first_name VARCHAR2(100),
+  last_name VARCHAR2(100),
+  address_state VARCHAR2(10),
+  email_address VARCHAR2(350)
+);
+
+BEGIN
+	INSERT INTO new_customers (customer_id, first_name, last_name, address_state, email_address) 
+	VALUES (15, 'John', 'Stock', 'ND', 'js1980@outlook.com');
+	INSERT INTO new_customers (customer_id, first_name, last_name, address_state, email_address) 
+	VALUES (12, 'Joseph', 'Bell', 'OR', 'thebell@yahoo.com');
+	INSERT INTO new_customers (customer_id, first_name, last_name, address_state, email_address) 
+	VALUES (3, 'Lois', 'Lawson', 'WA', 'lois_law@outlook.com');
+	INSERT INTO new_customers (customer_id, first_name, last_name, address_state, email_address) 
+	VALUES (8, 'Joseph', 'Bell', 'FL', 'jbell@gmail.com');
+	INSERT INTO new_customers (customer_id, first_name, last_name, address_state, email_address) 
+	VALUES (1, 'Teresa', 'Hudson', 'NY', 'thudson@abc.com');
+	INSERT INTO new_customers (customer_id, first_name, last_name, address_state, email_address) 
+	VALUES (4, 'Alice', 'Howard', 'SC', 'aliceperry@gmail.com');
+END;
+
+MERGE INTO existing_customers c
+USING new_customers n
+ON(c.customer_id = n.customer_id)
+WHEN MATCHED THEN 
+    UPDATE SET
+    c.first_name = n.first_name,
+    c.last_name = n.last_name,
+    c.address_state = n.address_state,
+    c.email_address = n.email_address
+DELETE WHERE c.first_name = 'John' -- delete optional
+WHEN NOT MATCHED THEN
+    INSERT (c.customer_id, c.first_name, c.last_name, c.address_state, c.email_address)
+    VALUES (n.customer_id, n.first_name, n.last_name, n.address_state, n.email_address)
+
+SELECT * FROM existing_customers
+
+#'Sequence Statements'
+
+CREATE SEQUENCE product_seq
+    MINVALUE 1
+    MAXVALUE 100000000000
+    START WITH 1
+    INCREMENT BY 1
+    CACHE 20; 
+
+SELECT product_seq.NEXTVAL FROM dual
+
+ALTER SEQUENCE product_seq
+    NOCACHE;
+
+SELECT product_seq.NEXTVAL FROM dual
+
+INSERT INTO products
+(product_id, product_name)
+VALUES (product_seq.NEXTVAL, 'any old product')
+----------------------------------------------------------------------------------------------------
+#'DELETE, TRUNCATE, and DROP commands'
+
+SELECT * FROM dept
+
+DELETE FROM dept WHERE dname IN'ACCOUNTING', 'RESEARCH', 'SALES'
+
+DELETE FROM dept -- can't delete if there is a foreign key column, you need to remove the foreign key from the table that has it in the constraint 
+
+ALTER TABLE emp DROP CONSTRAINT 
+EMP_DEPT_FK;
+
+DROP TABLE dept -- removes table so it doesn't exist in the system
+
+TRUNCATE TABLE emp -- remove all data from table without deleting
+
+DROP TABLE emp
+
+----------------------------------------------------------------------------------------------------
+#'Database Indexes (faster searching, you index columns that are often searched as you it will slow down if you index everything)'
+
+CREATE[UNIQUE] INDEX index_name
+    ON table_name(col1, col2.....)
+    [COMPUTE STATISTICS] --used for SQL to compute what type of data is in the column
+
+SELECT * FROM employees
+
+CREATE INDEX emp_name_idx
+    ON employees(ename)
+
+CREATE INDEX emp_name_job_date_idx
+    ON employees(ename, job, hiredate)
+    COMPUTE STATISTICS
+
+SELECT * FROM employees 
+WHERE ename = 'JOHN'
+
+CREATE UNIQUE INDEX emp_job_idx -- wont be able to make a unique index as there are multiple of the same job in the job column
+ON employees(job)
+
+DROP INDEX emp_name_job_date_idx
+
+ALTER INDEX emp_name_idx
+    REBUILD COMPUTE STATISTICS
+
+SELECT * FROM stores
+
+#'Removing duplicates'
+
+--ROWID a pseduo column that creates a column for each row to do editing on rows
+
+SELECT ROWID, store_id, city FROM stores
+
+DELETE FROM stores
+WHERE ROWID NOT IN(
+    SELECT MIN(ROWID)
+    FROM stores
+GROUP BY store_id, city
+)
+
+ALTER TABLE stores
+ADD CONSTRAINT store_id_pk PRIMARY KEY(store_id)
+
+CREATE UNIQUE INDEX store_id_idx
+ON stores(store_id)
+COMPUTE STATISTICS -- a primary key will automatically be indexed
+----------------------------------------------------------------------------------------------------
+#'System Tables (runs in the background and can always be queried in whatever ORACLE workspace)'
+
+SELECT * FROM all_tables
+WHERE table_name = 'EMPLOYEES' -- all columns needs to be capitilized if you want to find it
+AND rownum < 10 --give me only 10 rows
+
+SELECT * FROM all_tab_COLUMNS -- gives all tables and columns
+WHERE table_name = 'EMPLOYEES' 
+AND rownum < 10
+AND OWNER = 'WKSP_CAMMAHORACLE'
+
+SELECT * FROM ALL_OBJECTS
+WHERE ROWNUM < 50
+
+----------------------------------------------------------------------------------------------------
+#'Views (a stored query)'
+
+SELECT * FROM employees
+WHERE job = 'MANAGER'
+
+CREATE VIEW managers_v
+AS SELECT * FROM employees
+WHERE job = 'MANAGER'
+
+DROP VIEW managers_v
+
+#'Finding the highest salary for each store'
+
+SELECT 
+    e.store_id, 
+    e.ename, 
+    e.job, 
+    e.sal
+FROM 
+    employees e
+JOIN 
+    (SELECT 
+         store_id, MAX(sal) AS max_sal
+     FROM 
+         employees
+     GROUP BY 
+         store_id) max_salaries
+ON 
+    e.store_id = max_salaries.store_id
+    AND e.sal = max_salaries.max_sal
+ORDER BY 
+    e.store_id;
+
+#'Alternative using Partition by'
+
+SELECT store_id, ename, job, sal
+FROM (
+    SELECT 
+        e.store_id, 
+        e.ename, 
+        e.job, 
+        e.sal,
+        ROW_NUMBER() OVER (PARTITION BY e.store_id ORDER BY e.sal DESC) AS salary_rank
+    FROM 
+        employees e
+) ranked_employees
+WHERE salary_rank = 1
+ORDER BY store_id;
+
+#'Alternative 2'
+
+CREATE VIEW super_employees AS
+SELECT e1.* FROM employees e1
+JOIN
+    (SELECT store_id, MAX(sal) highest_sal
+    FROM employees
+    GROUP BY store_id
+    ) e2
+ON e1.store_id = e2.store_id
+AND e1.sal = e2.highest_sal
+WHERE ename <> 'FORD'
+ORDER BY e1.store_id
+
+"'Editing Views (add [or replace] to existing view code OR DROP view and add again)'
+
+CREATE OR REPLACE ---will update view
+VIEW super_employees AS
+SELECT e1.* FROM employees e1
+JOIN
+    (SELECT store_id, MAX(sal) highest_sal
+    FROM employees
+    GROUP BY store_id
+    ) e2
+ON e1.store_id = e2.store_id
+AND e1.sal = e2.highest_sal
+WHERE ename <> 'FORD'
+ORDER BY e1.store_id
+
+DROP VIEW super_employees -- then change and add again
+
+
+#'UNION (put two queries together only taking the unique values needs to be the same amount of columns)'
+
+SELECT * FROM super_employees
+UNION
+SELECT * FROM employees
+
+#'UNION ALL (put all rows in two queries together will duplicate)'
+#'MINUS takes out a row with a specific clause'
+
+SELECT * FROM super_employees
+MINUS
+SELECT * FROM employees WHERE job = 'SALESMAN'
+
+----------------------------------------------------------------------------------------------------
+#'DATA CONTROL LANGUAGE (DCL) [GRANT, REVOKE, ROLE]'
+-- GRANT: grant privledge for someone to utilize my schema(schema = user data)
+-- Example we have schema for CAM, U3, U4
+
+--Grant privledges (SELECT, CREATE, UPDATE, ...., to other schemas)
+GRANT SELECT,UPDATE,DELETE ON PRODUCTS TO U3, U4
+
+--What they have to do to utilize this privledge is to always add CAM. to table
+SELECT CAM.products
+
+-- REVOKE: remove privledge
+
+REVOKE UPDATE ON PRODUCTS TO U3
+-- ROLE: Group privledges
+CREATE ROLE r1,
+GRANT SELECT, UPDATE, DELETE
+
+--r1 will have the above privledges
+
+ALTER USER U3 DEFAULT ROLE r1
+
+SHOW USER -- for other oracle systems
+SELECT sys_context('userem', 'current_schema') FROM dual --for apex
+----------------------------------------------------------------------------------------------------
+#'OFFSET and FETCH'
+
+--ORACLE does not have LIMIT function
+ SELECT * FROM employees
+ ORDER BY store_id
+ FETCH NEXT 5 ROWS ONLY
+
+ --ALTERNATIVELY
+
+ SELECT * FROM employees
+ WHERE ROWNUM <=10
+ ORDER BY store_id
+
+ --OFFSET allows you to skip rows before limiting starts
+
+ SELECT * FROM employees 
+ ORDER BY store_id
+ OFFSET 2 ROWS
+ FETCH NEXT 5 ROWS ONLY -- you can use WITH TIES instead of ONLY to add any extra roles with ties
+
+ SELECT * FROM employees 
+ ORDER BY store_id
+ OFFSET 2 ROWS
+ FETCH NEXT 5 ROWS WITH TIES
+
+ SELECT * FROM employees 
+ ORDER BY store_id
+ OFFSET 2 ROWS
+ FETCH NEXT 2 PERCENT ROWS WITH TIES -- you can also use percent
+----------------------------------------------------------------------------------------------------
+#'Creating a Table with Interval Data Types'
+DROP TABLE building_lease
+
+CREATE TABLE building_lease (
+	lease_number NUMBER,
+	address VARCHAR2(50) NOT NULL,
+	lease_expiring_in INTERVAL YEAR TO MONTH,
+	PRIMARY KEY (lease_number)
+);
+
+INSERT INTO building_lease (
+	lease_number,
+	address,
+	lease_expiring_in
+	)
+VALUES (
+	110,
+	'303 Remdel Ave New York, NY 07391',
+	INTERVAL '10-2' YEAR TO MONTH
+	);
+
+INSERT INTO building_lease (
+	lease_number,
+	address,
+	lease_expiring_in
+	)
+VALUES (
+	120,
+	'42 Cranburry Rd New York, NY 09652',
+	INTERVAL '100' MONTH
+	);
+----------------------------------------------------------------------------------------------------
+#'Cascading Constraints'
+
+CREATE TABLE supplier
+( supplier_id numeric(10) not null,
+  supplier_name varchar2(50) not null,
+  contact_name varchar2(50),
+  CONSTRAINT supplier_pk PRIMARY KEY (supplier_id)
+);
+
+CREATE TABLE products
+( product_id numeric(10) not null,
+  supplier_id numeric(10) not null,
+  CONSTRAINT fk_supplier
+    FOREIGN KEY (supplier_id)
+    REFERENCES supplier(supplier_id)
+);
+
+BEGIN
+
+INSERT INTO supplier values(10, '1st Supplier', 'John Dollan');
+INSERT INTO supplier values(20, '2nd Supplier', 'Steve Reeves');
+INSERT INTO supplier values(30, '3rd Supplier', 'Peter Marcello');
+
+INSERT INTO products values(1, 10);
+INSERT INTO products values(2, 10);
+INSERT INTO products values(3, 10);
+INSERT INTO products values(4, 20);
+INSERT INTO products values(5, 20);
+INSERT INTO products values(6, 30);
+
+END;
+/
+
+----------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
